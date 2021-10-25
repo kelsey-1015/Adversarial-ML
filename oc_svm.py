@@ -8,70 +8,10 @@ import random
 import math
 import statistics
 from scipy.optimize import linprog
-from train_model import dataset_concatenate
 
-dataset_file_normal = 'couchdb/normal_v1_6_idf.csv'
-dataset_file_attack = 'couchdb/attack_v1_6_idf.csv'
 
-# (filename_normal.csv, filename_attack.csv)
-dataset_file_list_cb = [('couchdb/cb_normal_tf.csv', 'couchdb/cb_attack_tf.csv'),
-                        ('couchdb/cb_normal_tfidf.csv', 'couchdb/cb_attack_tfidf.csv')]
-
-dataset_file_list_mb = [('mongodb/mb_normal_tf.csv', []), ('mongodb/mb_normal_tf.csv', [])]
-
-dataset_file_list_ml_tf = ['ML_algorithm/ml_1_normal_tf.csv', 'ML_algorithm/ml_2_normal_tf.csv',
-                           'ML_algorithm/ml_3_normal_tf.csv', 'ML_algorithm/ml_4_normal_tf.csv',
-                           "ML_algorithm/ml_7_normal_tf.csv"]
-
-#TODO RENAME THIS python script and clean up unnecessary codes
-
-# nu_list = [0.001, 0.005, 0.007, 0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.99]
-# nu_list = [0.001, 0.005, 0.007, 0.01, 0.05, 0.1]
-# FOR TEST
-# nu_list = [0.01]
 nu = 0.01
-
 gamma_list = ['auto', 'scale']
-
-
-
-def oc_svm_threshold_test(training_set, testing_set_normal, testing_set_attack, threshold, kernel,
-                          nu_para, gamma_para = 'scale'):
-    """This function train a classifier and compute the results with a given threshold, this function is used to
-    compute the roc curve if we want using k-fold. ps: the thresholds should be set as distinct values of the scores.
-    """
-    clf = OneClassSVM(nu=nu_para, kernel=kernel, gamma=gamma_para)
-    clf.fit(training_set)
-
-    test_set = np.concatenate((testing_set_normal, testing_set_attack))
-    score = clf.decision_function(test_set)
-    y_true = np.array([1] * len(testing_set_normal) + [-1] * len(testing_set_attack))
-    fpr, tpr, thresholds = roc_curve(y_true, score)
-    # print(fpr, tpr, threshold)
-    print(thresholds)
-    plot.roc_curve(fpr, tpr)
-
-
-def oc_svm_threshold(training_set, testing_set_normal, testing_set_attack, threshold, kernel, nu_para,
-                     gamma_para='scale'):
-    """This function train a classifier and compute the results with a given threshold
-    """
-    clf = OneClassSVM(nu=nu_para, kernel=kernel, gamma=gamma_para)
-    clf.fit(training_set)
-
-    score_normal = clf.decision_function(testing_set_normal)
-    # print(score_normal)
-    predict_normal = [1 if v > threshold else -1 for v in score_normal]
-    predict_normal =np.array(predict_normal)
-    n_error_test_normal = predict_normal[predict_normal == -1].size
-    FP_rate = n_error_test_normal / len(testing_set_normal)
-
-    score_attack =clf.decision_function(testing_set_attack)
-    predict_attack = [1 if v > threshold else -1 for v in score_attack]
-    predict_attack = np.array(predict_attack)
-    n_error_test_attack = predict_attack[predict_attack == -1].size
-    TP_rate = n_error_test_attack / len(testing_set_attack)
-    return FP_rate, TP_rate
 
 
 def weighted_by_frequency(feature_vector_list):
@@ -85,15 +25,6 @@ def weighted_by_frequency(feature_vector_list):
         feature_vector_list_n.append(feature_vector_n)
 
     return feature_vector_list_n
-
-
-def read_data(csv_file):
-    """Read the CSV file and generate datasets as neseted np array"""
-    with open(csv_file, 'r') as f:
-        reader = csv.reader(f, quoting=csv.QUOTE_NONNUMERIC)
-        dataset_list = list(reader)
-    dataset_list = np.array(dataset_list)
-    return dataset_list
 
 
 def separate_ss(input_list):
@@ -201,29 +132,6 @@ def alfa_solveQP(dataset_u, y_list, q, kernel, nu, gamma='scale'):
 
     return new_classifier, eps
 
-#
-# def alfa_solveLP(training_normal, training_attack, dataset_u, eps, psi, C):
-#     """C =>Number of injected malicious samples, calculated with portions"""
-#     #TODO change to object-oriented coding style, using alfa as an object
-#     # func_coeff = [0] * len(training_attack)
-#     q_0 = [1]*len(training_normal)
-#     func_coeff = []
-#     for i in range(len(training_normal), len(dataset_u)):
-#         tmp = eps[i] - psi[i]
-#         func_coeff.append(tmp)
-#     # print(len(fun_coeff)==len(training_attack))
-#     # constraints
-#     a_eq = []
-#     b_eq = []
-#     tmp = [1]*len(training_attack)
-#     a_eq.append(tmp)
-#     b_eq.append(C)
-#     Q_bound = tuple([(0, 1)] * len(training_attack))
-#     q_1 = linprog(func_coeff, A_eq=a_eq, b_eq=b_eq, bounds=Q_bound,
-#                 options={"disp": False, "maxiter": 10000}).x
-#     q = np.concatenate((np.array(q_0), q_1))
-#     return q
-
 
 def alfa_solveLP(training_normal, training_attack, dataset_u, eps, psi, C):
     """C =>Number of injected malicious samples, calculated with portions"""
@@ -288,13 +196,17 @@ def ALFA(training_normal, training_attack, kernel, nu, C, gamma='scale'):
     return training_attack_selected
 
 
+def label_flipping(dataset_list_normal, testing_set_attack, kernel, nu, op_sq):
+    """This function contaminates the training datasets with various label flipping strategies and compute the
+    performance degradation.
+    op_sq: 0 ==> benchmark
+           1 ==> random label flipping attack;
+           2 ==> Furthest-first flip
+           3 ==> Nearest-first flip
+           4 ==> ALFA
 
+    """
 
-
-def oc_svm_test(dataset_list_normal, testing_set_attack, kernel, nu, op_sq=4):
-    """This function random shuffel the input data set and train the algorithms without k-fold
-     op_sq=0 ==> benchmark
-     op_sq = 1 ==> random label flipping attacks"""
 
     # TODO: change the 4 dataset names and make them consistent to the
     # TODO: auto generate resulst that serves as the input
@@ -302,14 +214,9 @@ def oc_svm_test(dataset_list_normal, testing_set_attack, kernel, nu, op_sq=4):
     if len(dataset_list_normal) == 0:
         raise ValueError("The input training data is empty!")
 
-    # print("dataset_list_normal: ", len(dataset_list_normal), len(dataset_list_normal[0]))
-    # print("testing_set_attack: ", len(testing_set_attack), len(testing_set_attack[0]))
-
     """Separate the feature vectors and the segment sequences"""
     dataset_normal, dataset_normal_ss = separate_ss(dataset_list_normal)
     dataset_attack, dataset_attack_ss = separate_ss(testing_set_attack)
-    # print("dataset_normal:", len(dataset_normal), len(dataset_normal[0]), type(dataset_normal))
-    # print("dataset_attack:", len(dataset_attack), len(dataset_attack[0]), type(dataset_attack))
 
     """Split normal data into training (80) and test dataset (20)"""
     r_seed = 10
@@ -322,8 +229,6 @@ def oc_svm_test(dataset_list_normal, testing_set_attack, kernel, nu, op_sq=4):
 
     training_normal = dataset_normal[training_normal_index]
     testing_normal = dataset_normal[testing_normal_index]
-    # print("training_normal", len(training_normal), len(training_normal[0]))
-    # print("testing_normal", len(testing_normal), len(testing_normal[0]))
 
     """Split the attack data into test and tainted dataset"""
     r_seed = 10
@@ -340,13 +245,12 @@ def oc_svm_test(dataset_list_normal, testing_set_attack, kernel, nu, op_sq=4):
     testing_attack = dataset_attack[testing_attack_index]
 
     portion_list = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4]
-    # portion_list = [0.1, 0.2, 0.3, 0.4, 0.5]
-    # portion_list = [0.5]
 
     if op_sq == 0:
         """Training with benchmark dataset"""
         FPR, TPR, acc = oc_svm(training_normal, testing_normal, testing_attack, kernel, nu)
         return acc
+
     elif op_sq == 1:
         """Uniform random flipping attacks"""
 
@@ -422,14 +326,12 @@ def oc_svm_test(dataset_list_normal, testing_set_attack, kernel, nu, op_sq=4):
 
 
 
-
-def parameter_search_test(data_list_normal, data_list_attack, kernel, nu):
+def attack_sq_loop(data_list_normal, data_list_attack, kernel, nu, ad_attack_sq_list):
     """With fixed nu value"""
-    #TODO: fix input variables, move to somewhere easy to modify
     sq_acc_dict = {}
-    for sq in [0, 1, 2, 3, 4]:
+    for sq in ad_attack_sq_list:
         print("sq: ", sq)
-        acc_dict = oc_svm_test(data_list_normal.copy(), data_list_attack.copy(),
+        acc_dict = label_flipping(data_list_normal.copy(), data_list_attack.copy(),
                                                                    kernel, nu, sq)
         # print(sq, ": ", acc_dict)
         sq_acc_dict[sq] = acc_dict
@@ -437,29 +339,9 @@ def parameter_search_test(data_list_normal, data_list_attack, kernel, nu):
     return sq_acc_dict
 
 
-# def parameter_search(data_list_normal, data_list_attack, kernel, nu_list):
-#
-#     nu_performance_dict = {}
-#     """"""
-#     for nu in nu_list:
-#         """As we change the data set array inside the loop, so we use dataset.copy()"""
-#         sq_acc_dict = {}
-#         for sq in [0, 1, 2, 3]:
-#             acc_dict = oc_svm_test(data_list_normal.copy(), data_list_attack.copy(),
-#                                                                    kernel, nu, sq)
-#             # print(sq, ": ", acc_dict)
-#             sq_acc_dict[sq] = acc_dict
-#             FPR = 0
-#             TPR = 0
-#         nu_performance_dict[nu] = (FPR, TPR)
-#     return nu_performance_dict
-
 
 def main():
-    dataset_file_normal = 'couchdb/cb_normal_tf.csv'
-    dataset_file_attack = 'couchdb/cb_attack_tf.csv'
-    dataset_normal = read_data(dataset_file_normal)
-    dataset_attack = read_data(dataset_file_attack)
+    pass
 
 
 

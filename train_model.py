@@ -77,37 +77,11 @@ def extract_feature_vector(rawtrace_file, feature_dict_file, Flag, segment_lengt
     return feature_vector_list
 
 
-def train_model(filename, app_name, feature_dict_file, segment_length_list, filter_flag,
-                oc_svm_kernel, feature_extraction, dr_flag, dr_dimension, n_gram_length, attack_index):
-    """Trace a model with global variable as inputs, currently used for oc-svm, this function applies 10-fold
-    cross validation, change output methods to json"""
-
-    rawtrace_file_normal = RAWTRACE_FILE[app_name]['normal']
-    if app_name == "ml0":
-        rawtrace_file_attack = RAWTRACE_FILE[app_name]['attack'][attack_index]
-    else:
-        rawtrace_file_attack = RAWTRACE_FILE[app_name]['attack']
-
-    feature_extraction_index = FEATURE_VECTOR[feature_extraction]
-    # dict with format {segment_length: {nu: (tpr, fpr, tpr_std, fpr_std}
-    segment_dict = {}
-
-    for segment_length in segment_length_list:
-
-        normal_set = dataset_concatenate(rawtrace_file_normal, feature_extraction_index, feature_dict_file,
-                                               segment_length, filter_flag, n_gram_length)
-        abnormal_set = extract_feature_vector(rawtrace_file_attack, feature_dict_file, feature_extraction_index,
-                                             segment_length, filter_flag, n_gram_length)
-
-        nu_performance_dict = oc.parameter_search(normal_set, abnormal_set, oc_svm_kernel, oc.nu_list)
-        segment_dict[segment_length] = nu_performance_dict
-
-    return segment_dict
-
-
-def train_model_test(app_name, feature_dict_file, segment_length, filter_flag,
+def train_model(app_name, feature_dict_file, segment_length, filter_flag,
                 oc_svm_kernel, feature_extraction, n_gram_length, attack_index):
     """Without fix nu and sengmentation length"""
+    #TODO: move out the defination
+    ad_attack_sq_list = [0, 1, 2, 3, 4]
 
     rawtrace_file_normal = RAWTRACE_FILE[app_name]['normal']
     if app_name == "ml0":
@@ -123,49 +97,25 @@ def train_model_test(app_name, feature_dict_file, segment_length, filter_flag,
     abnormal_set = extract_feature_vector(rawtrace_file_attack, feature_dict_file, feature_extraction_index,
                                              segment_length, filter_flag, n_gram_length)
 
-    sq_dict = oc.parameter_search_test(normal_set, abnormal_set, oc_svm_kernel, oc.nu)
+    sq_dict = oc.attack_sq_loop(normal_set, abnormal_set, oc_svm_kernel, oc.nu, ad_attack_sq_list)
+    # sq_dict = oc.parameter_search_test(normal_set, abnormal_set, oc_svm_kernel, oc.nu)
 
 
     return sq_dict
 
 
-# def train_model_fv_kernel(app_name, segment_length, filter_flag, dr_dimension, dr_flag_list,
-#                           fv_list, kernel_list, n_gram_length, attack_index):
-#     """ Generate results for all combinations of TF, TF-IDF, gaussian, linear
-#     INPUT: dr_flag --> whether perform dimension reduction [truncted SVD]
-#            dr_dimension --> the number of perform dimension"""
-#     algorithm_dict = {}
-#     for fv in fv_list:
-#         for kernel in kernel_list:
-#             for dr_flag in dr_flag_list:
-#                 labelname = result_labelname(kernel, fv, dr_flag)
-#
-#                 if fv == "N_GRAM":
-#                     feature_dict_file = FEATURE_DICT_FILE[fv][app_name]
-#                 else:
-#                     feature_dict_file = FEATURE_DICT_FILE[fv]
-#                 acc_dict = train_model_test(app_name, feature_dict_file, segment_length, filter_flag,
-#                                            kernel, fv, n_gram_length, attack_index)
-#
-#                 algorithm_dict[labelname] = acc_dict
-#
-#     return algorithm_dict
-
-def train_model_fv_kernel_test(app_name, segment_length, filter_flag, dr_dimension, dr_flag_list,
+def train_model_fv_kernel(app_name, segment_length, filter_flag,
                           fv_list, kernel_list, n_gram_length, attack_index):
     """ Generate results for all combinations of TF, TF-IDF, gaussian, linear
     INPUT: dr_flag --> whether perform dimension reduction [truncted SVD]
            dr_dimension --> the number of perform dimension"""
     for fv in fv_list:
         for kernel in kernel_list:
-            for dr_flag in dr_flag_list:
-                labelname = result_labelname(kernel, fv, dr_flag)
-
-                if fv == "N_GRAM":
-                    feature_dict_file = FEATURE_DICT_FILE[fv][app_name]
-                else:
-                    feature_dict_file = FEATURE_DICT_FILE[fv]
-                acc_dict = train_model_test(app_name, feature_dict_file, segment_length, filter_flag,
+            if fv == "N_GRAM":
+                feature_dict_file = FEATURE_DICT_FILE[fv][app_name]
+            else:
+                feature_dict_file = FEATURE_DICT_FILE[fv]
+            acc_dict = train_model(app_name, feature_dict_file, segment_length, filter_flag,
                                            kernel, fv, n_gram_length, attack_index)
 
     return acc_dict
@@ -198,16 +148,16 @@ def main():
     """For MongoDB, the attack_index only affects the ml0 app, so it can be set to 0 for other 2 applications"""
     attack_name = RAWTRACE_FILE[app_name]['attack']
     for attack_index in [1]:
-        acc_dict = train_model_fv_kernel_test(app_name, segment_length, filter_flag,
-        dr_dimension, dr_flag_list, fv_list, kernel_list, n_gram_length, attack_index=attack_index)
+        acc_dict = train_model_fv_kernel(app_name, segment_length, filter_flag, fv_list, kernel_list, n_gram_length,
+                                         attack_index=attack_index)
         print(acc_dict)
-        base_line = acc_dict[0]
-        acc_1_mean = acc_dict[1][0]
-        acc_1_std = acc_dict[1][1]
-        acc_2 = acc_dict[2]
-        acc_3 = acc_dict[3]
-        acc_4 = acc_dict[4]
-        pt.scatter_plot_err(base_line, acc_1_mean, acc_1_std, acc_2, acc_3, acc_4)
+        # base_line = acc_dict[0]
+        # acc_1_mean = acc_dict[1][0]
+        # acc_1_std = acc_dict[1][1]
+        # acc_2 = acc_dict[2]
+        # acc_3 = acc_dict[3]
+        # acc_4 = acc_dict[4]
+        # pt.scatter_plot_err(base_line, acc_1_mean, acc_1_std, acc_2, acc_3, acc_4)
 
 
 
