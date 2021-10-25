@@ -1,0 +1,682 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/README.txt" description="====================CODE==========================" line="8" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b9d56281-ac10-44c2-b827-6979e4c40fe0" name="Default Changelist" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="2096565309">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="66" />
+          <entry key="project.open.time.0" value="15" />
+          <entry key="project.open.time.1" value="1" />
+          <entry key="project.open.time.2" value="4" />
+          <entry key="project.open.time.3" value="41" />
+          <entry key="project.open.time.4" value="5" />
+          <entry key="project.open.time.8" value="1" />
+          <entry key="project.opened" value="67" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="attack_BIM" value="1" />
+          <entry key="attack_CW" value="3" />
+          <entry key="attack_FAB" value="1" />
+          <entry key="attack_FGSM" value="1" />
+          <entry key="attack_PGD" value="1" />
+          <entry key="attack_TPGD" value="1" />
+          <entry key="cb_rawtrace_attack_ace" value="1" />
+          <entry key="cb_v1_6_rawtrace_normal" value="1" />
+          <entry key="couchdb_normal_1" value="1" />
+          <entry key="couchdb_trace_2" value="1" />
+          <entry key="couchdb_v1_6_normal" value="1" />
+          <entry key="couchdb_v2_3_normal" value="1" />
+          <entry key="csv" value="58" />
+          <entry key="execution_time" value="2" />
+          <entry key="filename" value="1" />
+          <entry key="json" value="97" />
+          <entry key="ml0_attack" value="1" />
+          <entry key="ml0_attack_1" value="1" />
+          <entry key="ml0_normal" value="1" />
+          <entry key="mongo_rawtrace_normal" value="1" />
+          <entry key="normal_v1_6_ngram_norm" value="1" />
+          <entry key="oc_svm_gaussian_kernel_cb" value="2" />
+          <entry key="py" value="136" />
+          <entry key="tracefile-0" value="1" />
+          <entry key="txt" value="159" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="CSV" value="58" />
+          <entry key="JSON" value="97" />
+          <entry key="PLAIN_TEXT" value="184" />
+          <entry key="Python" value="136" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="Python Console" value="324" />
+          <entry key="dummy" value="25" />
+          <entry key="json" value="1" />
+          <entry key="py" value="65599" />
+          <entry key="txt" value="1570" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="JSON" value="1" />
+          <entry key="PLAIN_TEXT" value="1595" />
+          <entry key="Python" value="65923" />
+        </counts>
+      </usages-collector>
+    </session>
+    <session id="2119059556">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="7" />
+          <entry key="project.open.time.0" value="1" />
+          <entry key="project.open.time.1" value="2" />
+          <entry key="project.open.time.2" value="1" />
+          <entry key="project.open.time.3" value="4" />
+          <entry key="project.opened" value="8" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="Python Console" value="279" />
+          <entry key="py" value="9842" />
+          <entry key="txt" value="128" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="PLAIN_TEXT" value="128" />
+          <entry key="Python" value="10121" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="py" value="16" />
+          <entry key="txt" value="3" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="PLAIN_TEXT" value="3" />
+          <entry key="Python" value="16" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/train_model.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="368">
+              <caret line="189" column="18" selection-start-line="189" selection-start-column="18" selection-end-line="189" selection-end-column="18" />
+              <folding>
+                <element signature="e#157#187#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/constants.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="19" column="40" selection-start-line="19" selection-start-column="40" selection-end-line="19" selection-end-column="40" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>openat</find>
+      <find>2</find>
+      <find>FNR</find>
+      <find>svm</find>
+      <find>Exception</find>
+      <find>json.d</find>
+      <find>ngram</find>
+      <find>json.du</find>
+      <find>json.</find>
+      <find>dataset_concatenate</find>
+      <find>concatenate</find>
+      <find>extract_feat</find>
+      <find>syscall_index</find>
+      <find>feature_vector_list</find>
+      <find>feature_dict</find>
+      <find>json.load</find>
+      <find>print</find>
+      <find>time</find>
+      <find>NGRAM_LENGTH</find>
+      <find>oc_svm</find>
+      <find>attack</find>
+      <find>nu</find>
+      <find>portion</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/ngram_dict_generator.py" />
+        <option value="$PROJECT_DIR$/K-NN from scratch.py" />
+        <option value="$PROJECT_DIR$/syscall_list.txt" />
+        <option value="$PROJECT_DIR$/results/oc_svm_gaussian_kernel_cb" />
+        <option value="$PROJECT_DIR$/results/oc_svm_gaussian_kernel_cb.txt" />
+        <option value="$PROJECT_DIR$/results/oc_svm_linear_kernel_cb.txt" />
+        <option value="$PROJECT_DIR$/results/oc_svm_gaussian_kernel_mb.txt" />
+        <option value="$PROJECT_DIR$/results/oc_svm_linear_kernel_mb.txt" />
+        <option value="$PROJECT_DIR$/syscall_list.py" />
+        <option value="$PROJECT_DIR$/results/ocsvm_linear_ml_single_cross.txt" />
+        <option value="$PROJECT_DIR$/results/oc_svm_guassian_mul2one_cross.txt" />
+        <option value="$PROJECT_DIR$/log.txt" />
+        <option value="$PROJECT_DIR$/mongodb_ocsvm_linear_TF.txt" />
+        <option value="$PROJECT_DIR$/mongodb_ocsvm_linear_TFIDF.txt" />
+        <option value="$PROJECT_DIR$/mongodb_ocsvm_rbf_TFIDF.txt" />
+        <option value="$PROJECT_DIR$/ubuntu_system_call/syscall_list.py" />
+        <option value="$PROJECT_DIR$/global.py" />
+        <option value="$PROJECT_DIR$/couchdb_ocsvm_linear_TFIDF.txt" />
+        <option value="$PROJECT_DIR$/results/mongodb_ocsvm_rbf_TFIDF.txt" />
+        <option value="$PROJECT_DIR$/couchdb_ocsvm_linear_N_GRAM.txt" />
+        <option value="$PROJECT_DIR$/ml_ocsvm_linear_N_GRAM.txt" />
+        <option value="$PROJECT_DIR$/check_code.py" />
+        <option value="$PROJECT_DIR$/test_arg.py" />
+        <option value="$PROJECT_DIR$/couchdb_ocsvm_linear_TFIDF_svd.txt" />
+        <option value="$PROJECT_DIR$/data_formation_md.py" />
+        <option value="$PROJECT_DIR$/feature_vector_json/MONGODB_FEATURE_DICT_NGRAM.json" />
+        <option value="$PROJECT_DIR$/data_formation.py" />
+        <option value="$PROJECT_DIR$/cross_validation.py" />
+        <option value="$PROJECT_DIR$/try_auc.py" />
+        <option value="$PROJECT_DIR$/RESULTS_DATA_FOR_PLOTTING/FPR_TPR_RESULTS/EXECUTION_TIME_RESULTS.txt" />
+        <option value="$PROJECT_DIR$/RESULTS_DATA_FOR_PLOTTING/FILTERING_FPR_RESULTS/README.txt" />
+        <option value="$PROJECT_DIR$/RESULTS_DATA_FOR_PLOTTING/FPR_TPR_RESULTS/README.txt" />
+        <option value="$PROJECT_DIR$/fpr_analysis.py" />
+        <option value="$PROJECT_DIR$/json_comparison.py" />
+        <option value="$PROJECT_DIR$/trace_file_parser.py" />
+        <option value="$PROJECT_DIR$/RESULTS_DATA_FOR_PLOTTING/AUC_VALUE_RESULTS/README.txt" />
+        <option value="$PROJECT_DIR$/README.txt" />
+        <option value="$PROJECT_DIR$/result_comparison.txt" />
+        <option value="$PROJECT_DIR$/ALFA.py" />
+        <option value="$PROJECT_DIR$/ALFA_new.py" />
+        <option value="$PROJECT_DIR$/plot.py" />
+        <option value="$PROJECT_DIR$/train_model.py" />
+        <option value="$PROJECT_DIR$/constants.py" />
+        <option value="$PROJECT_DIR$/oc_svm.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="width" value="1920" />
+    <option name="height" value="1080" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Adversarial ML" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Adversarial ML" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="SearchEverywhereHistoryKey" value="feature_dict&#9;FILE&#9;file:///Users/lu/PycharmProjects/IDS/feature_vector_json/MONGODB_FEATURE_DICT_NGRAM.json&#10;2&#9;FILE&#9;file:///Users/lu/PycharmProjects/IDS/raw_tracefile/normal_v2_3.csv&#10;(2)&#9;ACTION&#9;EditorLangPopupMenu" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/raw_tracefile/trace_attack" />
+      <recent name="$PROJECT_DIR$/RESULTS_DATA_FOR_PLOTTING" />
+      <recent name="$PROJECT_DIR$/fpr_results" />
+      <recent name="$PROJECT_DIR$/results_data_wrapup" />
+      <recent name="$PROJECT_DIR$/results_data_wrapup/exetion_time_results" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/raw_tracefile" />
+      <recent name="$PROJECT_DIR$/RESULTS_DATA_FOR_PLOTTING/FPR_TPR_RESULTS" />
+      <recent name="$PROJECT_DIR$/results" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.train_model">
+    <configuration name="fpr_analysis" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="IDS" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/fpr_reduction_analysis.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="json_comparison" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="IDS" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/json_comparison.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="oc_svm" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="IDS" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/oc_svm.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="plot" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="IDS" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/plot.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="train_model" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="IDS" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/train_model.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.train_model" />
+      <item itemvalue="Python.plot" />
+      <item itemvalue="Python.json_comparison" />
+      <item itemvalue="Python.fpr_analysis" />
+      <item itemvalue="Python.oc_svm" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.train_model" />
+        <item itemvalue="Python.plot" />
+        <item itemvalue="Python.oc_svm" />
+        <item itemvalue="Python.fpr_analysis" />
+        <item itemvalue="Python.json_comparison" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b9d56281-ac10-44c2-b827-6979e4c40fe0" name="Default Changelist" comment="" />
+      <created>1608063009406</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1608063009406</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49464923" visible="true" weight="0.13849394" />
+      <window_info id="Favorites" order="1" side_tool="true" />
+      <window_info id="Structure" order="2" sideWeight="0.50535077" side_tool="true" visible="true" weight="0.13849394" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32866243" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.16732673" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3284974" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.3284974" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.4178218" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.32475248" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49925926" visible="true" weight="0.24876674" />
+      <window_info id="Favorites" order="1" side_tool="true" />
+      <window_info id="Structure" order="2" sideWeight="0.50074077" side_tool="true" visible="true" weight="0.24876674" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32866243" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.18674698" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3284974" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.3284974" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.4178218" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.32673267" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout-to-restore>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="testing_set_attack" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/ml0_performance.json" />
+    <entry file="file://$PROJECT_DIR$/feature_vector_json/ML0_FEATURE_DICT_NGRAM_FULL.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/raw_tracefile/ml0_attack_traces/ml0_attack_1">
+      <provider selected="true" editor-type-id="LargeFileEditor">
+        <state relative-caret-position="-808" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/raw_tracefile/ml0_attack_traces/ml0_attack">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-82177" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trace_attack/attack_FGSM" />
+    <entry file="file://$PROJECT_DIR$/trace_attack/attack_TPGD" />
+    <entry file="file://$PROJECT_DIR$/trace_attack/attack_FAB" />
+    <entry file="file://$PROJECT_DIR$/trace_attack/attack_CW" />
+    <entry file="file://$PROJECT_DIR$/trace_attack/attack_BIM" />
+    <entry file="file://$PROJECT_DIR$/trace_attack/attack_PGD" />
+    <entry file="file:///usr/local/Cellar/python@3.8/3.8.5/Frameworks/Python.framework/Versions/3.8/lib/python3.8/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="309" selection-start-line="309" selection-end-line="309" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/try.json" />
+    <entry file="file://$PROJECT_DIR$/ml0_multiple_attack_roc_linear_TF.json" />
+    <entry file="file://$PROJECT_DIR$/ml0_multiple_attack_roc.json" />
+    <entry file="file://$PROJECT_DIR$/ml0_multiple attack.json" />
+    <entry file="file://$PROJECT_DIR$/results_data_wrapup/fpr_tpr_results/ml0.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/results_data_wrapup/fpr_tpr_results/ml0svm.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/results_data_wrapup/fpr_tpr_results/couchdb_mix.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JSON_RESULTS/ml0.json" />
+    <entry file="file://$PROJECT_DIR$/RESULTS_DATA_FOR_PLOTTING/FPR_TPR_RESULTS/mongodb.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RESULTS_DATA_FOR_PLOTTING/EXECUTION_TIME_RESULTS.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="107" selection-start-column="107" selection-end-column="107" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/results_data_wrapup/roc_result/couchdb_performance.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/feature_vector_json/FEATURE_DICT.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RESULTS_DATA_FOR_PLOTTING/FILTERING_FPR_RESULTS/mongodb_fpr_ss_NGRAM.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RESULTS_DATA_FOR_PLOTTING/FILTERING_FPR_RESULTS/README.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="79" selection-start-column="79" selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RESULTS_DATA_FOR_PLOTTING/FPR_TPR_RESULTS/README.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="57" selection-start-column="57" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RESULTS_DATA_FOR_PLOTTING/FILTERING_FPR_RESULTS/mongodb_fpr_ss_tf.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fpr_reduction_analysis.py" />
+    <entry file="file://$PROJECT_DIR$/RAW_TRACEFILE_NEW/attack_CW" />
+    <entry file="file://$PROJECT_DIR$/mongodb_benchmark.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/try_auc.py" />
+    <entry file="file://$PROJECT_DIR$/K_NN_scratch.py" />
+    <entry file="file://$PROJECT_DIR$/data_formation.py" />
+    <entry file="file://$PROJECT_DIR$/json_comparison.py" />
+    <entry file="file://$PROJECT_DIR$/RESULTS_DATA_FOR_PLOTTING/AUC_VALUE_RESULTS/mongodb_performance.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RESULTS_DATA_FOR_PLOTTING/AUC_VALUE_RESULTS/README.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="104" selection-start-column="104" selection-end-column="104" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RESULTS_DATA_FOR_PLOTTING/AUC_VALUE_RESULTS/couchdb_performance.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RESULTS_DATA_FOR_PLOTTING/AUC_VALUE_RESULTS/ml0_multiple_attack_auc_30000.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RESULTS_DATA_FOR_PLOTTING/AUC_VALUE_RESULTS/ml0_performance.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/raw_tracefile/ml0_attack_traces/attack_CW">
+      <provider selected="true" editor-type-id="LargeFileEditor" />
+    </entry>
+    <entry file="file:///usr/local/lib/python3.8/site-packages/numpy/core/_methods.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2">
+          <caret line="196" column="46" selection-start-line="196" selection-start-column="46" selection-end-line="197" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1012">
+          <caret line="1663" selection-start-line="1663" selection-end-line="1663" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trace_file_parser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="888">
+          <caret line="262" selection-start-line="262" selection-end-line="262" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/result_comparison.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="47" selection-start-line="4" selection-start-column="47" selection-end-line="4" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ALFA.py" />
+    <entry file="file://$PROJECT_DIR$/ALFA_new.py" />
+    <entry file="file://$PROJECT_DIR$/README.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="40" selection-start-line="2" selection-start-column="40" selection-end-line="2" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oc_svm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="31" column="3" selection-start-line="31" selection-start-column="3" selection-end-line="31" selection-end-column="3" />
+          <folding>
+            <element signature="e#1#36#0" expanded="true" />
+            <marker date="1635169054790" expanded="true" signature="5897:5899" ph="..." />
+            <marker date="1635169054790" expanded="true" signature="6661:17387" ph="..." />
+            <marker date="1635169054790" expanded="true" signature="9670:9675" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="277">
+          <caret line="231" column="23" selection-start-line="231" selection-start-column="23" selection-end-line="231" selection-end-column="23" />
+          <folding>
+            <marker date="1634639233958" expanded="true" signature="10482:10487" ph="..." />
+            <marker date="1634639233958" expanded="true" signature="12053:12056" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="189" column="18" selection-start-line="189" selection-start-column="18" selection-end-line="189" selection-end-column="18" />
+          <folding>
+            <element signature="e#157#187#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/constants.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="19" column="40" selection-start-line="19" selection-start-column="40" selection-end-line="19" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

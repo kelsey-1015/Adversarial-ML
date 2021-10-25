@@ -1,0 +1,7 @@
+raw_tracefile
+RESULTS_DATA_FOR_PLOTTING
+results_data_wrapup
+*.json
+__pycache__
+.DS_Store
+
