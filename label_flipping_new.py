@@ -13,7 +13,7 @@ nu = 0.01
 gamma_list = ['auto', 'scale']
 
 # save the configuration of different experiment settings
-configuration_dict = {"ADFA_LD_single":{"nr_train_normal": 300, "portion_train_test": 0.9}}
+configuration_dict = {"ADFA_LD_single": {"nr_train_normal": 300, "portion_train_test": 0.9}}
 
 
 def weighted_by_frequency(feature_vector_list):
@@ -191,7 +191,7 @@ def ALFA(training_normal, training_attack, kernel, nu, C, gamma='scale'):
     return training_attack_selected
 
 
-def label_flipping_db_generation(train_normal, train_attack, op_sq, portion_list, kernel='linear', nu=0.01):
+def label_flipping_db_generation(train_normal, train_attack, op_sq, portion_list, kernel, nu=0.01):
     """This function generates the tainted training dataset with different attack strategies"""
     if op_sq == 2:
         """Furthest-first flip"""
@@ -244,7 +244,7 @@ def label_flipping_db_generation(train_normal, train_attack, op_sq, portion_list
 
 
 
-def label_flipping_san(san_dict, train_normal, train_attack, test_normal, test_attack,  op_sq, portion_list, kernel='linear',
+def label_flipping_san(san_dict, train_normal, train_attack, test_normal, test_attack,  op_sq, portion_list, kernel,
                        nu=0.01):
     """This function contaminates the training datasets with various label flipping strategies and compute the
     performance degradation.
@@ -333,8 +333,8 @@ def attack_sq_loop(train_normal, train_attack, test_normal, test_attack, kernel,
     return sq_acc_dict
 
 
-def data_preprocessing_multiple_attack(file_tf_dict, attack_name_test, attack_name_train_list,
-                                       nr_train_normal=300, portion_train_test=0.9):
+def data_preprocessing_multiple_attack(file_tf_dict, attack_name_test, attack_name_train_list, nr_train_normal,
+                                       portion_train_test):
     """This function tests the classifier with one attack and injected malicious points of the remaining attacks"""
     #TODO We all pickup the first N elements if there are more provided samples than the requrid samples.
     #TODO Some work need to be done to rankdomly pickup
@@ -399,7 +399,7 @@ def data_preprocessing_multiple_attack(file_tf_dict, attack_name_test, attack_na
     return train_normal, train_attack, test_normal, test_attack
 
 
-def data_preprocessing(file_tf_dict, attack_name, nr_train_normal=300, portion_train_test=0.8):
+def data_preprocessing(file_tf_dict, attack_name, nr_train_normal, portion_train_test):
     train_normal = []
     train_normal_dict = file_tf_dict["Training_Data_Master"]
 
@@ -458,95 +458,6 @@ def data_preprocessing(file_tf_dict, attack_name, nr_train_normal=300, portion_t
     return train_normal, train_attack, test_normal, test_attack
 
 
-# def label_flipping(train_normal, train_attack, test_normal, test_attack, kernel, nu, op_sq, portion_list):
-#     """This function contaminates the training datasets with various label flipping strategies and compute the
-#     performance degradation.
-#     op_sq: 0 ==> benchmark
-#            1 ==> random label flipping attack;
-#            2 ==> Furthest-first flip
-#            3 ==> Nearest-first flip
-#            4 ==> ALFA
-#     INPUT: train_normal, train_attack, test_normal, test_attack are np arrays of preferred size
-#
-#     """
-#
-#     if op_sq == 0:
-#         """Training with benchmark dataset"""
-#         FPR, TPR, acc = oc_svm(train_normal, test_normal, test_attack, kernel, nu)
-#         return acc
-#
-#     elif op_sq == 1:
-#         """Uniform random flipping attacks"""
-#
-#         portion_dict_acc_mean = {}
-#         portion_dict_acc_std = {}
-#         for portion in portion_list:
-#             #TODO: Check if the num_adver_samples is smaller than nr_train_attack
-#             num_adver_samples = math.ceil(portion*len(train_normal))
-#             # randomize the malicious samples
-#             r_seed_list = list(range(1, 10))
-#             acc_list = []
-#             tpr_list = []
-#             fpr_list = []
-#             for r_seed in r_seed_list:
-#                 adver_samples = random_selection(train_attack, num_adver_samples, r_seed)
-#                 train_tainted = np.concatenate((train_normal, adver_samples))
-#                 FPR, TPR, acc = oc_svm(train_tainted, test_normal, test_attack, kernel, nu)
-#                 acc_list.append(acc)
-#                 tpr_list.append(TPR)
-#                 fpr_list.append(FPR)
-#
-#             acc_mean = sum(acc_list)/len(acc_list)
-#             acc_std = statistics.stdev(acc_list)
-#             portion_dict_acc_mean[portion] = acc_mean
-#             portion_dict_acc_std[portion] = acc_std
-#
-#         return [portion_dict_acc_mean, portion_dict_acc_std]
-#
-#     elif op_sq == 2:
-#         """Furthest-first flip"""
-#         portion_dict_acc = {}
-#         # furthest to nearest
-#         adver_samples_index = adver_samples_rank(train_normal, train_attack, kernel, nu)
-#         for portion in portion_list:
-#             num_adver_samples = math.ceil(portion*len(train_normal))
-#             output_adver_samples_index = adver_samples_index[:num_adver_samples]
-#             adver_samples = train_attack[output_adver_samples_index]
-#             training_tainted = np.concatenate((train_normal, adver_samples))
-#             FPR, TPR, acc = oc_svm(training_tainted, test_normal, test_attack, kernel, nu)
-#             portion_dict_acc[portion] = acc
-#         return portion_dict_acc
-#
-#     elif op_sq==3:# Nearst-first flip
-#         # portion_list = [0.1, 0.2, 0.3, 0.4, 0.5]
-#         portion_dict_acc = {}
-#         # furthest to nearest
-#         adver_samples_index = adver_samples_rank(train_normal, train_attack, kernel, nu)
-#         for portion in portion_list:
-#             num_adver_samples = math.ceil(portion * len(train_normal))
-#             if num_adver_samples > len(train_attack):
-#                 # raise ValueError("The input portion exceeds the maximum number!")
-#                 print("The input portion {} exceeds the maximum number!".format(portion))
-#                 break
-#             else:
-#                 output_adver_samples_index = adver_samples_index[(len(train_attack)-num_adver_samples):]
-#                 adver_samples = train_attack[output_adver_samples_index]
-#                 training_tainted = np.concatenate((train_normal, adver_samples))
-#                 FPR, TPR, acc = oc_svm(training_tainted, test_normal, test_attack, kernel, nu)
-#                 portion_dict_acc[portion] = acc
-#         return portion_dict_acc
-#
-#     elif op_sq == 4: # ALFA
-#         portion_dict_acc = {}
-#         for portion in portion_list:
-#             print("portion: ", portion)
-#             num_adver_samples = math.ceil(portion * len(train_normal))
-#             num_adver_samples = min(num_adver_samples, len(train_attack))
-#             adver_samples = ALFA(train_normal, train_attack, kernel, nu, num_adver_samples)
-#             training_tainted = np.concatenate((train_normal, adver_samples))
-#             FPR, TPR, acc = oc_svm(training_tainted, test_normal, test_attack, kernel, nu)
-#             portion_dict_acc[portion] = acc
-#         return portion_dict_acc
 
 def main():
     data_preprocessing_multiple_attack()

@@ -1,8 +1,6 @@
 """This script is the main script, it parses the input tracefiles, trains the oc-svm model with input feature vectors
 and compute the evaluation metrics"""
-
 import trace_file_parser as tp
-import lable_flipping as lf
 import json
 import numpy as np
 from constants import *

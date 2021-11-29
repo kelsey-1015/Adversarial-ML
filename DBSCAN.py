@@ -15,6 +15,7 @@ attack_folder_list = ["Adduser", "Java_Meterpreter", "Web_Shell"]
 ADFA_LD_attack_name = ["Add User", "Java Meterpreter", "Web Shell"]
 euclidean = {'eps': 0.3, 'minP': 100}
 dl4ld_dataset_split_para = {'couchdb': {'kernel': "linear", 'ratio': 0.9}, 'mongodb': {'kernel': "linear", 'ratio': 0.8}}
+adfa_dataset_split_para = {'kernel': "rbf", 'ratio': 0.9}
 nr_train_parameter_search = 300
 
 
@@ -160,11 +161,12 @@ def adfa_db_parser_total(attack_name, laplace_smoothing):
     return train_normal, test_normal, attack_dataset
 
 
-def adfa_db_preprocessing(attack_name, laplace_smoothing):
+def adfa_db_preprocessing(attack_name, laplace_smoothing, nr_train_normal, portion_train_test):
     output = convert_to_dict_total()
     feature_dict = unique_symbol_dict_generation(output)
     tf_dict_adfa = convert_to_dict_tf(feature_dict, laplace_smoothing)
-    train_normal, train_attack, test_normal, test_attack = LFP.data_preprocessing(tf_dict_adfa, attack_name)
+    train_normal, train_attack, test_normal, test_attack = LFP.data_preprocessing(tf_dict_adfa, attack_name,
+                                                                                  nr_train_normal, portion_train_test)
     return train_normal, train_attack, test_normal, test_attack
 
 
@@ -249,6 +251,7 @@ def DL4LD_mitigation():
             portion_tainted_dataset = LFP.label_flipping_db_generation(train_normal.copy(), train_attack.copy(), op,
                                                                        portion_list)
             portion_san_dict = {}
+
             for portion in portion_list:
                 label_true = portion_tainted_dataset[portion][0]
                 tainted_dataset = portion_tainted_dataset[portion][1]
@@ -262,8 +265,8 @@ def DL4LD_mitigation():
         op_acc_dict_s = {}
         for op in op_list:
             if op == 0:
-                acc = LFP.label_flipping_san(op_san_dict.copy(), train_normal.copy(), train_attack.copy(), test_normal.copy(), test_attack.copy(), op,
-                                              portion_list)
+                acc = LFP.label_flipping_san(op_san_dict.copy(), train_normal.copy(), train_attack.copy(),
+                                             test_normal.copy(), test_attack.copy(), op, portion_list)
                 op_acc_dict[op] = acc
                 op_acc_dict_s[op] = acc
             else:
@@ -278,30 +281,28 @@ def DL4LD_mitigation():
         plt.scatter_plot_err_s(op_acc_dict_total[app_name], op_acc_dict_s_total[app_name], portion_list, plt_title)
 
 
-def ADFA_LA_mitigation():
+def ADFA_LA_mitigation(nr_train_normal, laplace_smoothing, eqs, minP, kernel,
+                       portion_train_test, improve_flag):
     """Step 1: Generate train_normal, train_attack, test_normal, test_attack into np arrays;
        Step 2: Generate tainted dataset with specific portion and label flipping strategies
         """
-    nr_train_parameter_search = 300
-    laplace_smoothing = False
-    eqs = 0.3
-    minP = 100
 
     op_acc_dict_total = {}
     op_acc_dict_s_total = {}
-    plt_title = "Performance degradation of the ADFA_LD dataset"
     for attack_index in [0, 1, 2]:
         # plt_title = "ADFA_LD Dataset with {} attack".format(ADFA_LD_attack_name[attack_index])
         attack = attack_folder_list[attack_index]
         # Step 1
-        train_normal, train_attack, test_normal, test_attack = adfa_db_preprocessing(attack, laplace_smoothing)
+        train_normal, train_attack, test_normal, test_attack = adfa_db_preprocessing(attack, laplace_smoothing,
+                                                                                     nr_train_normal, portion_train_test)
         # Step 2
         op_list = [0, 2, 3, 4]
         op_san_dict = {}
         for op in op_list:
             if op == 0:
                 continue
-            portion_tainted_dataset = LFP.label_flipping_db_generation(train_normal, train_attack, op, portion_list)
+            portion_tainted_dataset = LFP.label_flipping_db_generation(train_normal, train_attack, op, portion_list,
+                                                                       kernel)
             portion_san_dict = {}
             for portion in portion_list:
                 label_true = portion_tainted_dataset[portion][0]
@@ -317,12 +318,13 @@ def ADFA_LA_mitigation():
         for op in op_list:
             if op == 0:
                 acc = LFP.label_flipping_san(op_san_dict, train_normal, train_attack, test_normal, test_attack, op,
-                                              portion_list)
+                                              portion_list, kernel)
                 op_acc_dict[op] = acc
                 op_acc_dict_s[op] = acc
             else:
                 portion_dict_acc, portion_dict_acc_s = LFP.label_flipping_san(op_san_dict, train_normal, train_attack,
-                                                                               test_normal, test_attack, op, portion_list)
+                                                                               test_normal, test_attack, op, portion_list,
+                                                                              kernel)
                 op_acc_dict[op] = portion_dict_acc
                 op_acc_dict_s[op] = portion_dict_acc_s
 
@@ -330,16 +332,27 @@ def ADFA_LA_mitigation():
         op_acc_dict_s_total[attack] = op_acc_dict_s
 
 
-    plt.scatter_plot_err(op_acc_dict_total, op_acc_dict_s_total, portion_list, plt_title)
+    plt.scatter_plot_err(op_acc_dict_total, op_acc_dict_s_total, portion_list, improve_flag)
 
 
 
 
 def main():
 
-    # ADFA_LA_mitigation()
+    # For ADFA_LD dataset with eudlidean distance 
+    nr_train_parameter_search = 300
+    laplace_smoothing = False
+    eqs = 0.3
+    minP = 100
+    kernel = 'rbf'
+    portion_train_test = 0.9
+    improve_flag = True
 
-    DL4LD_mitigation()
+    ADFA_LA_mitigation(nr_train_parameter_search, laplace_smoothing, eqs, minP, kernel, portion_train_test, improve_flag)
+
+
+    #TODO: ADAPT THE PARAMETERS, REMOVE THE DEFAULT AUGUMENTS AND CHANGE THE configurations with app name
+    # DL4LD_mitigation()
 
 
 
