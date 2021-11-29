@@ -2,14 +2,12 @@
 and compute the evaluation metrics"""
 
 import trace_file_parser as tp
-import oc_svm as oc
+import lable_flipping as lf
 import json
 import numpy as np
-import argparse
 from constants import *
-import plot as pt
 
-# TODO fix the test code stream
+
 
 def dataset_concatenate(rawtrace_file_list, Flag, feature_dict_file, segment_length, filter_flag, n_gram_length):
     """This function combines data from multiple lists into an np array, col_num equals to the number of keys in
@@ -78,11 +76,8 @@ def extract_feature_vector(rawtrace_file, feature_dict_file, Flag, segment_lengt
 
 
 def train_model(app_name, feature_dict_file, segment_length, filter_flag,
-                oc_svm_kernel, feature_extraction, n_gram_length, attack_index):
+                oc_svm_kernel, feature_extraction, n_gram_length, ad_attack_sq_list, portion_list, attack_index):
     """Without fix nu and sengmentation length"""
-    #TODO: move out the defination
-    ad_attack_sq_list = [0, 1, 2, 3, 4]
-
     rawtrace_file_normal = RAWTRACE_FILE[app_name]['normal']
     if app_name == "ml0":
         rawtrace_file_attack = RAWTRACE_FILE[app_name]['attack'][attack_index]
@@ -92,20 +87,17 @@ def train_model(app_name, feature_dict_file, segment_length, filter_flag,
 
     feature_extraction_index = FEATURE_VECTOR[feature_extraction]
 
-    normal_set = dataset_concatenate(rawtrace_file_normal, feature_extraction_index, feature_dict_file,
+    normal_dataset = dataset_concatenate(rawtrace_file_normal, feature_extraction_index, feature_dict_file,
                                                segment_length, filter_flag, n_gram_length)
-    abnormal_set = extract_feature_vector(rawtrace_file_attack, feature_dict_file, feature_extraction_index,
+    attack_dataset = extract_feature_vector(rawtrace_file_attack, feature_dict_file, feature_extraction_index,
                                              segment_length, filter_flag, n_gram_length)
 
-    sq_dict = oc.attack_sq_loop(normal_set, abnormal_set, oc_svm_kernel, oc.nu, ad_attack_sq_list)
-    # sq_dict = oc.parameter_search_test(normal_set, abnormal_set, oc_svm_kernel, oc.nu)
-
-
+    sq_dict = lf.attack_sq_loop(normal_dataset, attack_dataset, oc_svm_kernel, lf.nu, ad_attack_sq_list, portion_list)
     return sq_dict
 
 
 def train_model_fv_kernel(app_name, segment_length, filter_flag,
-                          fv_list, kernel_list, n_gram_length, attack_index):
+                          fv_list, kernel_list, n_gram_length, ad_attack_sq_list, portion_list, attack_index=1):
     """ Generate results for all combinations of TF, TF-IDF, gaussian, linear
     INPUT: dr_flag --> whether perform dimension reduction [truncted SVD]
            dr_dimension --> the number of perform dimension"""
@@ -116,48 +108,51 @@ def train_model_fv_kernel(app_name, segment_length, filter_flag,
             else:
                 feature_dict_file = FEATURE_DICT_FILE[fv]
             acc_dict = train_model(app_name, feature_dict_file, segment_length, filter_flag,
-                                           kernel, fv, n_gram_length, attack_index)
+                                           kernel, fv, n_gram_length, ad_attack_sq_list, portion_list, attack_index)
 
     return acc_dict
 
 
 def main():
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--appname', type=str, default='couchdb', help='input the application name')
-    # parser.add_argument('--dimension', type=int, default=5, help='input the dimension for trunctedSVD')
-    args = parser.parse_args()
-    app_name = args.appname
-    # dr_dimension = args.dimension
+    # parser = argparse.ArgumentParser()
+    # parser.add_argument('--appname', type=str, default='mongodb', help='input the application name')
+    # args = parser.parse_args()
+    # app_name = args.appname
+
+    app_name = 'mongodb'
+
 
     """Set different experimental settings """
-
     n_gram_length = 3
     segment_length = 30000
-    # apply dimension reduction or not
-    dr_flag_list = [False]
     # which feature extraction methods will be used['TF", "TFIDF", "N_GRAM"]
     fv_list = ["TF"]
     # which kernel to use ["rbf", "linear"]
     kernel_list = ["linear"]
     filter_flag = True
-    dr_dimension = 15
-    # indicate with attack is tested as abnormal data
-    algorithm_dict_total = {}
+    ad_attack_sq_list = [0, 1, 2, 3, 4]
+    ad_attack_sq_list = [3]
+    portion_list = [0.05, 0.075, 0.1, 0.125, 0.15, 0.175, 0.2]
+    app_name_list = ['couchdb', 'mongodb']
 
-    """For MongoDB, the attack_index only affects the ml0 app, so it can be set to 0 for other 2 applications"""
-    attack_name = RAWTRACE_FILE[app_name]['attack']
-    for attack_index in [1]:
+    """Fthe attack_index only affects the ml0 app, so it can be set to 0 for other 2 applications"""
+    app_acc_dict = {}
+
+    for app_name in app_name_list:
+
         acc_dict = train_model_fv_kernel(app_name, segment_length, filter_flag, fv_list, kernel_list, n_gram_length,
-                                         attack_index=attack_index)
-        print(acc_dict)
+                                         ad_attack_sq_list, portion_list)
+        app_acc_dict[app_name] = acc_dict
+        # print(acc_dict)
         # base_line = acc_dict[0]
         # acc_1_mean = acc_dict[1][0]
         # acc_1_std = acc_dict[1][1]
         # acc_2 = acc_dict[2]
         # acc_3 = acc_dict[3]
         # acc_4 = acc_dict[4]
-        # pt.scatter_plot_err(base_line, acc_1_mean, acc_1_std, acc_2, acc_3, acc_4)
+    title_text = 'DL4LD use case'
+    # pt.scatter_plot_err(app_acc_dict, title_text, portion_list)
 
 
 

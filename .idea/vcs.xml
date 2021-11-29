@@ -2,5 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ADFA_LD" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ADFA_LD_total" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/a-labelled-version-of-the-ADFA-LD-dataset" vcs="Git" />
   </component>
 </project>
