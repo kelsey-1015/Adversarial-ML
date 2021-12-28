@@ -150,7 +150,7 @@ def main():
         # acc_3 = acc_dict[3]
         # acc_4 = acc_dict[4]
     title_text = 'DL4LD use case'
-    # pt.scatter_plot_err(app_acc_dict, title_text, portion_list)
+    pt.scatter_plot_err(app_acc_dict, title_text, portion_list)
 
 
 

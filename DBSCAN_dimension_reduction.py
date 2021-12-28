@@ -11,23 +11,16 @@ from sklearn.decomposition import TruncatedSVD
 import random
 from sklearn.decomposition import PCA
 import json
-from scipy.spatial.distance import *
-from DBSCAN_dimension_reduction import dbscan_dr
 
 attack_folder_list = ["Adduser", "Java_Meterpreter", "Web_Shell"]
 ADFA_LD_attack_name = ["Add User", "Java Meterpreter", "Web Shell"]
 """1 ==> euc; 2 ==> cross entropy; 3: square ; sq: [eps, minP]"""
-# optimal_para_config = {1: [0.3, 100], 2: [0.81, 60], 3: [0.21, 100]}
-# Test
-optimal_para_config = {1: [0.3, 100], 2: [0.81, 60], 3: [0.21, 100], 4: [0.41, 100], 5: [0.71, 60], 6: [0.31, 100]}
-
+optimal_para_config = {1: [0.3, 100], 2: [0.81, 60], 3: [0.21, 100]}
+# optimal_para_config = {1: [0.3, 100], 2: [0.81, 80], 3: [0.21, 100]}
 # euclidean = {'eps': 0.3, 'minP': 100}
 # cross_entropy ={'eps': 0.61, 'minP': 100}
 # square = {'eps': 0.21, 'minP': 100}
-
-dl4ld_dataset_split_para_v1 = {'couchdb': {'kernel': "linear", 'ratio': 0.9}, 'mongodb': {'kernel': "linear", 'ratio': 0.9}}
-dl4ld_dataset_split_para_v2 = {'couchdb': {'kernel': "rbf", 'ratio': 0.9},
-                                'mongodb': {'kernel': "rbf", 'ratio': 0.9}}
+dl4ld_dataset_split_para = {'couchdb': {'kernel': "linear", 'ratio': 0.9}, 'mongodb': {'kernel': "linear", 'ratio': 0.8}}
 adfa_dataset_split_para = {'kernel': "rbf", 'ratio': 0.9}
 nr_train_parameter_search = 300
 
@@ -76,7 +69,6 @@ def extract_feature_vector(rawtrace_file, feature_dict_file, Flag, segment_lengt
     # change into a numpy array for consistence
     feature_vector_list = np.array(feature_vector_list)
     return feature_vector_list
-
 
 def dataset_concatenate(rawtrace_file_list, Flag, feature_dict_file, segment_length, filter_flag, n_gram_length):
     """This function combines data from multiple lists into an np array, col_num equals to the number of keys in
@@ -145,6 +137,7 @@ def dl4ld_db_processing(app_name, train_test_ratio, feature_extraction="TF"):
     return train_normal, train_attack, test_normal, test_attack
 
 
+
 def adfa_db_parser_total(attack_name, laplace_smoothing):
     """Convert the total dict to np array of tf"""
 
@@ -198,32 +191,26 @@ def dime_reduction_pca(input_array, nr_dimension):
 def dime_reduction_trunctedsvd(input_array, nr_dimension):
     svd = TruncatedSVD(n_components=nr_dimension)
     svd.fit(input_array)
-    output_array = svd .transform(input_array)
+    output_array = svd.transform(input_array)
     return output_array
 
 
-def dbscan(input_dataset, eps_i, min_s_i, distance_metric):
+def dbscan_dr(input_dataset, eps_i, min_s_i, distance_metric, dr_op, nr_dimension):
+
+    if dr_op == 1: # Truncted SVD
+        input_dataset = dime_reduction_trunctedsvd(input_dataset, nr_dimension)
+    elif dr_op == 2: # pcs
+        input_dataset = dime_reduction_pca(input_dataset, nr_dimension)
 
     if distance_metric == 1:
         db = DBSCAN(eps=eps_i, min_samples=min_s_i).fit(input_dataset)
         labels_pred = db.labels_
-    elif distance_metric == 2: # cross entropy, the input arrays are TFs with Laplace smoothing
+    elif distance_metric == 2:  # cross entropy, the input arrays are TFs with Laplace smoothing
         db = DBSCAN(eps=eps_i, min_samples=min_s_i, metric=cross_entropy).fit(input_dataset)
         labels_pred = db.labels_
-    elif distance_metric == 3: # square distance
+    elif distance_metric == 3:  # square distance
         db = DBSCAN(eps=eps_i, min_samples=min_s_i, metric=mydistance).fit(input_dataset)
         labels_pred = db.labels_
-    elif distance_metric == 4: # cosine distance
-        db = DBSCAN(eps=eps_i, min_samples=min_s_i, metric='cosine').fit(input_dataset)
-        labels_pred = db.labels_
-
-    elif distance_metric == 5: # cosine distance
-        db = DBSCAN(eps=eps_i, min_samples=min_s_i, metric='manhattan').fit(input_dataset)
-        labels_pred = db.labels_
-    elif distance_metric == 6: # cosine distance
-        db = DBSCAN(eps=eps_i, min_samples=min_s_i, metric='minkowski', p=3).fit(input_dataset)
-        labels_pred = db.labels_
-
 
     n_clusters = len(set(labels_pred)) - (1 if -1 in labels_pred else 0)
     n_noise = list(labels_pred).count(-1)
@@ -272,8 +259,8 @@ def parameter_search(nr_parameter_search, distance_metric):
 
     # eps_list =[i/100 for i in list(range(1, 100, 10))]
     # minp_list = range(180, 50, -10)
-    eps_list = [i / 100 for i in list(range(1, 100, 10))]
-    minp_list = range(180, 50, -10)
+    eps_list = [i / 100 for i in list(range(1, 100, 20))]
+    minp_list = range(180, 50, -20)
 
     for eps in eps_list:
         for minp in minp_list:
@@ -287,18 +274,13 @@ def parameter_search(nr_parameter_search, distance_metric):
 
 def DL4LD_mitigation(app_name_list, portion_list, distance_metric, eqs, minP):
 
-    # eqs = 0.3
-    # minP = 100
-
     op_acc_dict_total = {}
     op_acc_dict_s_total = {}
 
     dl4ld_dataset_split_para = {'couchdb': {'kernel': "rbf", 'ratio': 0.9},
                                 'mongodb': {'kernel': "rbf", 'ratio': 0.9}}
 
-
     for app_name in app_name_list:
-
         kernel = dl4ld_dataset_split_para[app_name]['kernel']
         portion_train_test = dl4ld_dataset_split_para[app_name]['ratio']
 
@@ -326,11 +308,9 @@ def DL4LD_mitigation(app_name_list, portion_list, distance_metric, eqs, minP):
             if op == 0:
                 acc = LFP.label_flipping_san(op_san_dict.copy(), train_normal.copy(), train_attack.copy(),
                                              test_normal.copy(), test_attack.copy(), op, portion_list, kernel)
-
                 op_acc_dict[op] = acc
                 op_acc_dict_s[op] = acc
             else:
-                print(op)
                 portion_dict_acc, portion_dict_acc_s = LFP.label_flipping_san(op_san_dict.copy(), train_normal.copy(),
                                                                               train_attack.copy(), test_normal.copy(),
                                                                               test_attack.copy(), op, portion_list, kernel)
@@ -340,11 +320,11 @@ def DL4LD_mitigation(app_name_list, portion_list, distance_metric, eqs, minP):
         op_acc_dict_total[app_name] = op_acc_dict
         op_acc_dict_s_total[app_name] = op_acc_dict_s
 
-    # plt.scatter_plot_err_dl4ld(op_acc_dict_total, op_acc_dict_s_total, portion_list)
-    return op_acc_dict_total, op_acc_dict_s_total
+        # plt.scatter_plot_err_s(op_acc_dict_total[app_name], op_acc_dict_s_total[app_name], portion_list)
+
 
 def ADFA_LA_mitigation(nr_train_normal, eqs, minP, kernel,
-                       portion_train_test, distance_metric, portion_list, attack_index_list):
+                       portion_train_test, distance_metric, portion_list, dr_op, nr_dimension, attack_index_list):
     """
 
        distance_metric: describe how to calculate the distance between samples in the DBSCAN clutering algo:
@@ -359,7 +339,7 @@ def ADFA_LA_mitigation(nr_train_normal, eqs, minP, kernel,
 
         # square or euclidean
         if distance_metric != 2:
-            """Step 1: Generate train_normal, train_atftack, test_normal, test_attack into np arrays """
+            """Step 1: Generate train_normal, train_attack, test_normal, test_attack into np arrays """
             laplace_smoothing = False
             train_normal, train_attack, test_normal, test_attack = adfa_db_preprocessing(attack, laplace_smoothing,
                                                                                          nr_train_normal, portion_train_test)
@@ -374,7 +354,7 @@ def ADFA_LA_mitigation(nr_train_normal, eqs, minP, kernel,
                 portion_san_dict = {}
                 for portion in portion_list:
                     tainted_dataset = portion_tainted_dataset[portion][1]
-                    labels, n_clusters, n_noise = dbscan(tainted_dataset, eqs, minP, distance_metric)
+                    labels, n_clusters, n_noise = dbscan(tainted_dataset, eqs, minP, distance_metric, dr_op, nr_dimension)
                     if n_clusters == 0:
                         raise ValueError("all the samples are detected as outliers")
                     san_dataset = sanitization(tainted_dataset, labels)
@@ -407,7 +387,7 @@ def ADFA_LA_mitigation(nr_train_normal, eqs, minP, kernel,
                     tainted_dataset_l = portion_tainted_dataset_l[portion][1]
                     """Output the flags of each sample with TF + laplace smoothing"""
 
-                    labels, n_clusters, n_noise = dbscan(tainted_dataset_l, eqs, minP, distance_metric)
+                    labels, n_clusters, n_noise = dbscan(tainted_dataset_l, eqs, minP, distance_metric, dr_op, nr_dimension)
                     if n_clusters == 0:
                         raise ValueError("all the samples are detected as outliers")
 
@@ -449,53 +429,45 @@ def main():
 
     # For ADFA_LD dataset with eudlidean distance
     portion_list = [0.05, 0.075, 0.1, 0.125, 0.15, 0.175, 0.2]
+    # for fast test
+    # portion_list = [0.05, 0.1]
     nr_train_normal = 300
     nr_parameter_search_db =300
-    # eqs = 0.3
-    # minP = 10
     kernel = 'rbf'
     portion_train_test = 0.9
     improve_flag = True
-    """1 ==> euc; 2 ==> cross entropy; 3: square ; 4: cosine; 5: manhanttan sq: [eps, minP]"""
-    distance_metric_list = [1, 3, 4, 5, 6]
-
-    # distance_metric_list = [1, 3]
+    distance_metric = 1
+    nr_dimension = 10
     attack_index_list = [0, 1, 2]
 
-
-    """This block of code is used for parameter search", choose the """
-    # parameter_search_distance_metric = 6
-    # parameter_search(nr_parameter_search_db, parameter_search_distance_metric)
-    """END"""
-
-
-
-    """The following block of code deals with the public dataset"""
-    # acc_dict_s_dm = {}
-    # for distance_metric in distance_metric_list:
-    #     eqs = optimal_para_config[distance_metric][0]
-    #     minP = optimal_para_config[distance_metric][1]
+    # eqs = optimal_para_config[distance_metric][0]
+    # minP = optimal_para_config[distance_metric][1]
     #
+    # acc_dict_s_dr = {}
+    # for dr_op in [0, 1, 2]:
     #     acc_dict, acc_dict_s = ADFA_LA_mitigation(nr_train_normal, eqs, minP, kernel, portion_train_test,
-    #                                                            distance_metric, portion_list, attack_index_list)
-    #     acc_dict_s_dm[distance_metric] = acc_dict_s
+    #                                           distance_metric, portion_list, dr_op, nr_dimension, attack_index_list)
+    #     acc_dict_s_dr[dr_op] = acc_dict_s
     #
+    # plt.scatter_plot_err_dr(acc_dict, acc_dict_s_dr, portion_list, improve_flag)
+
+    # with open('acc_dict_s_cross_entropy.json', 'w') as fp:
+    #     json.dump(acc_dict_s_dm, fp)
+
+    # with open('acc_dict_s_full.json', 'w') as fp_1:
+    #     json.dump(acc_dict_s_dm, fp_1)
+
+
     # plt.scatter_plot_err(acc_dict, acc_dict_s_dm, portion_list, improve_flag)
 
-    """The code stops here"""
+    # parameter_search(nr_parameter_search_db, 2)
 
 
-    """The following block of code deals with the dl4ld dataset"""
-
-    dl4ld_appname_list = ['couchdb', 'mongodb']
-    acc_dict_s_dm = {}
-    for distance_metric in distance_metric_list:
-        eqs = optimal_para_config[distance_metric][0]
-        minP = optimal_para_config[distance_metric][1]
-        acc_dict, acc_dict_s = DL4LD_mitigation(dl4ld_appname_list, portion_list, distance_metric, eqs, minP)
-        acc_dict_s_dm[distance_metric] = acc_dict_s
-
-    plt.scatter_plot_err_dl4ld(acc_dict, acc_dict_s_dm, portion_list, improve_flag)
+    #TODO: ADAPT THE PARAMETERS, REMOVE THE DEFAULT AUGUMENTS AND CHANGE THE configurations with app name
+    eqs = 0.3
+    minP = 100
+    app_name_list = ['mongodb']
+    DL4LD_mitigation(app_name_list, portion_list, distance_metric, eqs, minP)
 
 
 
